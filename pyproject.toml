@@ -1,0 +1,21 @@
+[project]
+name = "chemlibrary-chemapi"
+version = "0.0.1"
+authors = [
+  { name="Chem", email="codechem@proton.me" },
+]
+description = "Chems Python Library."
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "GPL-3.0-or-later"
+license-files = ["LICEN[CS]E*"]
+
+[project.urls]
+Homepage = "https://github.com/chemlibrary/chemapi"
+
+[tool.fastapi]
+entrypoint = "main:app"
