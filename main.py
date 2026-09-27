@@ -7,8 +7,14 @@ uv run fastapi dev
 """
 
 from fastapi import FastAPI
-from chempy.rdm import random_number
-from chempy.secure import generate_pgp_key
+from chempy.rdm import (
+    random_number,
+    dice,
+)
+from chempy.secure import (
+    generate_pgp_keypair,
+    generate_password,
+)
 
 
 app = FastAPI()
@@ -21,7 +27,7 @@ async def root():
     }
 
 
-@app.get('/rdm/wheel/{comma_delimited_choices}')
+@app.get('/random/wheel/{comma_delimited_choices}')
 async def random_wheel(comma_delimited_choices:str):
     if comma_delimited_choices == None or comma_delimited_choices == '':
         choices = ['red', 'orange', 'yellow', 'green', 'blue', 'purple']
@@ -32,10 +38,31 @@ async def random_wheel(comma_delimited_choices:str):
     }
 
 
-@app.get('/pgp/create')
+@app.get('/random/dice/{rolls}/{dice_type}')
+async def roll_dice(rolls:str, dice_type:str):
+    if rolls.isnumeric(): rolls = int(rolls)
+    else: rolls = 1
+    result = dice(rolls=rolls, dice_type=dice_type)
+    if len(result) > 1:
+        return {'rolls': result}
+    else:
+        return {'roll': result[0]}    
+
+
+@app.get('/generate/pgp_keypair')
 async def create_pgp_key():
-    private_key, public_key = generate_pgp_key()
+    private_key, public_key = generate_pgp_keypair()
     return {
         'private_key': private_key,
         'public_key': public_key
+    }
+
+
+@app.get('/generate/password/{length}')
+async def create_new_password(length:int = None):
+    if length == None:
+        length = 16
+    password = generate_password(length=length)
+    return {
+        'password': password
     }

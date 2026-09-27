@@ -1,12 +1,12 @@
 [project]
 name = "chemlibrary-chemapi"
-version = "0.0.2"
+version = "0.0.3"
 authors = [
   { name="Chem", email="codechem@proton.me" },
 ]
 description = "Chems Python Library."
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.12.3"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
